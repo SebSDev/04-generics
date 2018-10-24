@@ -1,10 +1,10 @@
 package de.thro.inf.prg3.a04.collections;
 
-public interface SimpleList extends Iterable {
+public interface SimpleList<T> extends Iterable {
 	/**
 	 * Add a given object to the back of the list.
 	 */
-	void add(Object o);
+	void add(T o);
 
 	/**
 	 * @return current size of the list
