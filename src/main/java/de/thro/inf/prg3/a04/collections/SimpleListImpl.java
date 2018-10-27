@@ -1,5 +1,6 @@
 package de.thro.inf.prg3.a04.collections;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -26,7 +27,7 @@ public class SimpleListImpl<T> implements SimpleList<T>
         /* special case empty list */
         if (head == null)
         {
-            head = new ListElement(item);
+            head = new ListElement<>(item);
         }
         else
         {
@@ -41,6 +42,11 @@ public class SimpleListImpl<T> implements SimpleList<T>
         size++;
     }
 
+    public void addDefault(Class<T> clazz) throws IllegalAccessException, InstantiationException
+    {
+        this.add(clazz.newInstance());
+    }
+
     /**
      * @return size of the list
      */
@@ -50,31 +56,25 @@ public class SimpleListImpl<T> implements SimpleList<T>
     }
 
     /**
-     * Get a new SimpleList instance with all items of this list which match the given filter
-     * @param filter SimpleFilter instance
-     * @return new SimpleList instance
-     */
-    public SimpleListImpl filter(SimpleFilter filter)
-    {
-        SimpleListImpl<T> result = new SimpleListImpl();
-
-        for (T o : this)
-        {
-            if (filter.include(o))
-            {
-                result.add(o);
-            }
-        }
-        return result;
-    }
-
-    /**
      * @inheritDoc
      */
     @Override
     public Iterator<T> iterator()
     {
         return new SimpleIterator();
+    }
+
+    @Override
+    public T[] toArray()
+    {
+        ArrayList<T> arr = new ArrayList<T>();
+
+        for (T e : this)
+        {
+            arr.add(e);
+        }
+
+        return (T[])arr.toArray();
     }
 
     /**
